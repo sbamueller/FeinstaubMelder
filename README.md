@@ -16,3 +16,4 @@ if maxwert > 50:
     
  Hier können sie zum einen den Wert anpassen ab dem eine Feinstaubwarnung getwittert werden sollt und auch den Text ändern.
  
+Weitere Informationen zu diesem Projekt: https://sbamueller.wordpress.com/2017/04/23/twitterbot-2-feinstaubfr/
