@@ -36,7 +36,7 @@ crontab -e
 ( do change the file path to be the file path to the directory of your script )
    
 ```
-0,5,10,12,15,20,25,30,35,40,45,50,55 * * * * cd /FILEPATH/TO/YOUR/SCRIPTS/DIRECTORY; /usr/bin/python3 tweetbeialarm.py
+0,5,10,12,15,20,25,30,35,40,45,50,55 * * * * cd /home/miska/documents/luftdaten/luftdaten_bot/code; /usr/bin/python3 luftDaten_bot_1pt5.py
 ```
 
 ** please note 1 : ** You do in fact need to add the file-path to the directory where you've stored the python script. 
@@ -50,3 +50,27 @@ Also, every time a cronjob starts, it leaves an entry in the system log. You can
 ```
 grep CRON /var/log/syslog
 ```
+
+
+#### access_keys.json settings
+
+This is the file that contains the tokens needed to be able to use the twitter API to tweet. Make sure to get the right access tokens from twitter and insert them in this file.
+Also do make sure to enter the right file-path, in the 
+
+*NOTE:* this file needs to be on the same server as the python script and the path to this file needs to be entered in the script, by the *twitter_access_tokens_filepath* variable.
+
+#### access_keys.json
+
+This file contains a one line list of sensorIDs, to the sensors used by this twitter bot. please only enter their numbers, with each separated by a comma, in one line. 
+No line-breaks or any other characters than numbers and commas. 
+Otherwise Mr/s python script gets terribly confused.
+Kindly put the file on a web-server and supply the url to the file in the *url_of_sensor_list_* variable. 
+
+Something like this is what it should look like 
+
+```
+533,928,1210,1224,1264,1288,1615,1667,1685,1699,1939,2289,2384
+```
+
+You can also upload your list of sensor IDs onto github and link it, as here:
+https://raw.githubusercontent.com/miskaknapek/test_repository__ipython_notebook_tests/master/luftDaten_sensor_list.csv
