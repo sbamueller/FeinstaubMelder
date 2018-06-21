@@ -1,34 +1,52 @@
-# FeinstaubMelder
-Is an automated particle matter warning system. Once the PM Value of certain censors from the http://luftdaten.info systems raises above a threshold, it tweets a warning. The tweets are trigged by a cron job. 
 
-The text o the tweet looks like this: 
+### Feinstaub twitter-bot 
 
-"- Achtung Freiburg!
-Feinstaubwerte hoch - Sensor: 7446 ist bei PM10 20 ug/m3
- - aktuelle Sensorinfo: 
-https://feinstaub.rexfue.de/7446 "
+The Feinstaub bot tweets 
 
-This is currently developed by https://github.com/miskaknapek and me. 
+### requirements 
+- python >= 3
+- *tweepy* pyhton extension 
 
-There is one system currenlty used: https://twitter.com/FeinstaubFR
 
-# More information in German *
+### Important settings 
 
-Fragt bestimmte Sensoren ab und wenn diese über 50 y/m3 sind, dann twittert er eine Feinstaub Warnung
+- are_we_tweeting : this True/False switch sets whether the tweet text generated in the script is actually sent to twitter. 
+This can be good for testing code, such that the generated tweet isn't sent to twitter all the time. 
 
-# Einige Hinweise:
+- pm_safety_limit : when the sensor PM value exceeds this value, then the warning tweet is generated and sent to twitter ( unless the are_we_tweeting switch is set to False )
 
-Ändern sie unter:
-* Freiburger Sensornummern, einfach neu dazugekommene hier an die Liste dranh
-sd = [533,1224,1288,928,1210,1264,1685,1615,1667]
-Diese Nummern, durch die Sensoren, von denen sie twittern wollen.
+- twitter_access_tokens_filepath : filepath relative to the directory the script is started from, of the json file with twiter access tokens.
 
-Die Nummern finden sie auf http://freiburg.maps.luftdaten.info/ wenn sie mit der Maus über den Sensor ziehen.
+- url_of_sensor_list_ : url to the one line csv sensor list file, with comma separated sensor numbers
 
-* hier kannst du den Maxwert anpassen
-if maxwert > 50:
-    tweet = 'Achtung Freiburg! Feinstaubwerte hoch - Sensor: ' + str(sensor) + ' ist bei PM10 ' + str(maxwert) + '  $
-    
- Hier können sie zum einen den Wert anpassen ab dem eine Feinstaubwarnung getwittert werden sollt und auch den Text ändern.
- 
-Weitere Informationen zu diesem Projekt: https://sbamueller.wordpress.com/2017/04/23/twitterbot-2-feinstaubfr/
+
+### Setting up on server
+
+#### cronjob settings 
+One of the easier ways of getitng the feinstaub bot to run on a regular basis is to run it as a crontjob. To do this, on a linux server… 
+
+- start the cronjob settings by typing the following in a terminal 
+
+```
+crontab -e
+```
+
+
+- then add the following line at the end of the cronjobs 
+( do change the file path to be the file path to the directory of your script )
+   
+```
+0,5,10,12,15,20,25,30,35,40,45,50,55 * * * * cd /FILEPATH/TO/YOUR/SCRIPTS/DIRECTORY; /usr/bin/python3 tweetbeialarm.py
+```
+
+** please note 1 : ** You do in fact need to add the file-path to the directory where you've stored the python script. 
+** please note 2 : ** Please add the path to the python3 version you're using.
+
+Cronjobs, if you've not used them before, are a bit tricky, to say the least. 
+One doesn't necessaily see the terminal output of a script ( there are excpetions, see cronjob documentation ). So if things don't work, one needs to debug in various 'funny' ways. 
+For this reason there are some commented-out code lines in the code, to write more log entries, for debugging reasons. 
+Also, every time a cronjob starts, it leaves an entry in the system log. You can check the cronjobs in the log file by typing the following line in to the terminal :
+
+```
+grep CRON /var/log/syslog
+```
