@@ -73,4 +73,4 @@ Something like this is what it should look like
 ```
 
 You can also upload your list of sensor IDs onto github and link it, as here:
-https://raw.githubusercontent.com/miskaknapek/test_repository__ipython_notebook_tests/master/luftDaten_sensor_list.csv
+https://raw.githubusercontent.com/sbamueller/FeinstaubMelder/FeinstaubMelder_v2_0/luftDaten_sensor_list.csv
